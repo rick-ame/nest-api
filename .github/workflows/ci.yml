@@ -34,8 +34,9 @@ jobs:
         uses: MishaKav/jest-coverage-comment@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          title: Unit Test Result
-          junitxml-path: ./coverage/junit.xml
-          junitxml-title: JUnit
+          title: Test Report
+          multiple-junitxml-files: |
+            Unit, ./coverage/junit.xml
+            E2E, ./coverage/junit-e2e.xml
           coverage-path: ./coverage/coverage.txt
           coverage-path-prefix: src/
