@@ -14,13 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
+      - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          node-version: 18
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:cov
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   test-e2e:
     runs-on: ubuntu-latest
