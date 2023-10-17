@@ -21,7 +21,7 @@ describe('AppController', () => {
 
   describe('version', () => {
     it('should get build info', () => {
-      expect(appController.getVersion).not.toBeNull()
+      expect(appController.getVersion()).not.toBeNull()
     })
   })
 })
