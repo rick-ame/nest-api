@@ -13,16 +13,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  coverage:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-  test-e2e:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -33,4 +24,17 @@ jobs:
           node-version: 18
           cache: 'npm'
       - run: npm ci
+
+      - run: npm run test:cov
+
       - run: npm run test:e2e
+
+      # https://github.com/marketplace/actions/jest-coverage-comment
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          title: Unit Test Result
+          junitxml-path: ./coverage/junit.xml
+          junitxml-title: JUnit
+          coverage-path: ./coverage/coverage.txt
