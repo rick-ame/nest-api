@@ -78,6 +78,7 @@
       "json-summary"
     ],
     "reporters": [
+      "default",
       "jest-junit"
     ],
     "testEnvironment": "node"
