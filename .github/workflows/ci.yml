@@ -18,6 +18,7 @@ jobs:
         with:
           test-script: npm run test:cov
           coverage-file: ./coverage/coverage-final.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   test-e2e:
     runs-on: ubuntu-latest
