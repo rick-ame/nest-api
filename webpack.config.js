@@ -8,7 +8,10 @@ const { merge } = require('webpack-merge')
 
 const { version } = require('./package.json')
 
-/** @returns {WebpackConfiguration} */
+/**
+ * @param {WebpackConfiguration} options
+ * @returns {WebpackConfiguration}
+ * */
 module.exports = (options) =>
   merge(options, {
     plugins: [
