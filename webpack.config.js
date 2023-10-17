@@ -2,6 +2,8 @@
 // @ts-check
 /** @typedef {import('webpack').Configuration} WebpackConfiguration */
 
+require('dotenv').config()
+
 const git = require('git-rev-sync')
 const { DefinePlugin } = require('webpack')
 const { merge } = require('webpack-merge')
@@ -17,6 +19,7 @@ module.exports = (options) =>
     plugins: [
       new DefinePlugin({
         'globalThis.VERSION': JSON.stringify(`${version}-${git.short()}`),
+        'globalThis.ENABLE_SWAGGER': process.env.ENABLE_SWAGGER,
       }),
     ],
   })
