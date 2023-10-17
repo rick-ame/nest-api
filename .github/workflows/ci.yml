@@ -38,3 +38,4 @@ jobs:
           junitxml-path: ./coverage/junit.xml
           junitxml-title: JUnit
           coverage-path: ./coverage/coverage.txt
+          coverage-path-prefix: src
