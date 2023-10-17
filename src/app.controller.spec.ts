@@ -18,4 +18,10 @@ describe('AppController', () => {
       expect(appController.getHello()).toBe('Hello World!')
     })
   })
+
+  describe('version', () => {
+    it('should get build info', () => {
+      expect(appController.getVersion).not.toBeNull()
+    })
+  })
 })
