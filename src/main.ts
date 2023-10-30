@@ -9,6 +9,8 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService)
 
+  // use pre-defined variable in webpack this section could be dead code in build result,
+  // would not affect product env even with wrong env config
   if (globalThis.ENABLE_SWAGGER) {
     const document = SwaggerModule.createDocument(
       app,
