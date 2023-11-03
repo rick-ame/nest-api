@@ -14,14 +14,8 @@ describe('AppController', () => {
   })
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!')
-    })
-  })
-
-  describe('version', () => {
-    it('should get build info', () => {
-      expect(appController.getVersion()).not.toBeNull()
+    it('should return version', () => {
+      expect(appController.getVersion()).toBeTruthy()
     })
   })
 })
