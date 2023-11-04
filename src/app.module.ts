@@ -1,10 +1,20 @@
-import { Module } from '@nestjs/common'
+import { Controller, Get, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import { AppController } from './app.controller'
+import { AuthModule } from './auth/auth.module'
+
+@Controller()
+class AppController {
+  @Get()
+  getVersion() {
+    return {
+      version: globalThis.VERSION,
+    }
+  }
+}
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), AuthModule],
   controllers: [AppController],
 })
 export class AppModule {}
