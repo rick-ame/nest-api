@@ -6,8 +6,11 @@ import { initApp } from './util'
 describe('AppController (e2e)', () => {
   let app: INestApplication
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     app = await initApp()
+  })
+  afterAll(async () => {
+    await app.close()
   })
 
   it('/ (GET)', () => {

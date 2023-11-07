@@ -1,29 +1,71 @@
 import { Test } from '@nestjs/testing'
+import { PrismaClient } from '@prisma/client'
+import * as argon from 'argon2'
+import { DeepMockProxy, mockDeep } from 'jest-mock-extended'
 
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 
+import { PrismaService } from '@/prisma/prisma.service'
+
 describe('AuthController', () => {
   let authController: AuthController
+  let prismaMock: DeepMockProxy<PrismaClient>
 
   beforeEach(async () => {
     const app = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService],
-    }).compile()
+      providers: [AuthService, PrismaService],
+    })
+      .overrideProvider(PrismaService)
+      .useValue(mockDeep<PrismaClient>())
+      .compile()
 
     authController = app.get(AuthController)
+    prismaMock = app.get(PrismaService)
   })
 
   describe('auth', () => {
     it('should user signup', () => {
-      expect(
-        authController.signup({ email: 'foo@bar.com', password: 'foobar' }),
-      ).toEqual('signup')
+      const user = {
+        email: 'foo@bar.com',
+        password: 'foobar',
+      }
+      prismaMock.user.create.mockResolvedValue({
+        ...user,
+        id: 'id',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        hash: '',
+        firstName: null,
+        lastName: null,
+      })
+
+      expect(authController.signup(user)).resolves.toHaveProperty(
+        'email',
+        user.email,
+      )
     })
 
-    it('should user login', () => {
-      expect(authController.login()).toEqual('login')
+    it('should user login', async () => {
+      const user = {
+        email: 'foo@bar.com',
+        password: 'foobar',
+      }
+      prismaMock.user.findUnique.mockResolvedValue({
+        ...user,
+        id: 'id',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        hash: await argon.hash(user.password),
+        firstName: '',
+        lastName: '',
+      })
+
+      expect(authController.login(user)).resolves.toHaveProperty(
+        'email',
+        user.email,
+      )
     })
   })
 })

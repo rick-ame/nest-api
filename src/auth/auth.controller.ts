@@ -1,7 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 
 import { AuthDto } from './auth.dto'
+import { AuthEntity } from './auth.entity'
 import { AuthService } from './auth.service'
 
 @ApiTags('auth')
@@ -9,13 +10,15 @@ import { AuthService } from './auth.service'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiCreatedResponse({ type: AuthEntity })
   @Post('signup')
-  signup(@Body() dto: AuthDto) {
-    return this.authService.signup(dto)
+  async signup(@Body() dto: AuthDto) {
+    return new AuthEntity(await this.authService.signup(dto))
   }
 
+  @ApiCreatedResponse({ type: AuthEntity })
   @Post('login')
-  login() {
-    return this.authService.login()
+  async login(@Body() dto: AuthDto) {
+    return new AuthEntity(await this.authService.login(dto))
   }
 }
