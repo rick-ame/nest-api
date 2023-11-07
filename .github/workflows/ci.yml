@@ -12,6 +12,9 @@ permissions:
   contents: read
   pull-requests: write
 
+env:
+  DATABASE_URL: mongodb://localhost
+
 jobs:
   Test:
     runs-on: ubuntu-latest
@@ -26,6 +29,11 @@ jobs:
       - run: npm ci
 
       - run: npm run test:cov
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: 6.0
 
       - run: npm run test:e2e
 

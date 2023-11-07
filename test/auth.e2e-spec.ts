@@ -6,21 +6,35 @@ import { initApp } from './util'
 describe('AuthController (e2e)', () => {
   let app: INestApplication
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     app = await initApp()
   })
+  afterAll(async () => {
+    await app.close()
+  })
+
+  const user = {
+    email: 'foo@bar.com',
+    password: '123',
+  }
 
   it('/signup (POST)', () => {
     return request(app.getHttpServer())
       .post('/signup')
+      .send(user)
       .expect(201)
-      .expect('signup')
+      .expect(({ body }) => {
+        expect(body.email).toBe(user.email)
+      })
   })
 
   it('/login (POST)', () => {
     return request(app.getHttpServer())
       .post('/login')
+      .send(user)
       .expect(201)
-      .expect('login')
+      .expect(({ body }) => {
+        expect(body.email).toBe(user.email)
+      })
   })
 })

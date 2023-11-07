@@ -41,8 +41,9 @@ describe('AuthController', () => {
         lastName: null,
       })
 
-      expect(authController.signup(user)).resolves.toEqual(
-        expect.objectContaining(user),
+      expect(authController.signup(user)).resolves.toHaveProperty(
+        'email',
+        user.email,
       )
     })
 
@@ -60,8 +61,10 @@ describe('AuthController', () => {
         firstName: '',
         lastName: '',
       })
-      expect(authController.login(user)).resolves.toEqual(
-        expect.objectContaining(user),
+
+      expect(authController.login(user)).resolves.toHaveProperty(
+        'email',
+        user.email,
       )
     })
   })
