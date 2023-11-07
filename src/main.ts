@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
@@ -7,7 +8,11 @@ import { AppModule } from './app.module'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  const configService = app.get(ConfigService)
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  )
 
   // use pre-defined variable in webpack this section could be dead code in build result,
   // would not affect product env even with wrong env config
@@ -22,6 +27,7 @@ async function bootstrap() {
     SwaggerModule.setup('docs', app, document)
   }
 
-  await app.listen(configService.get('PORT') || 3000)
+  await app.listen(app.get(ConfigService).get('PORT') || 3000)
 }
+
 bootstrap()

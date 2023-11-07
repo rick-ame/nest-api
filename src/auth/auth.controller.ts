@@ -1,6 +1,7 @@
-import { Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 
+import { AuthDto } from './auth.dto'
 import { AuthService } from './auth.service'
 
 @ApiTags('auth')
@@ -9,8 +10,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  signup() {
-    return this.authService.signup()
+  signup(@Body() dto: AuthDto) {
+    return this.authService.signup(dto)
   }
 
   @Post('login')

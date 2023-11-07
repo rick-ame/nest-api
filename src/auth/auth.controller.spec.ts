@@ -17,7 +17,9 @@ describe('AuthController', () => {
 
   describe('auth', () => {
     it('should user signup', () => {
-      expect(authController.signup()).toEqual('signup')
+      expect(
+        authController.signup({ email: 'foo@bar.com', password: 'foobar' }),
+      ).toEqual('signup')
     })
 
     it('should user login', () => {
