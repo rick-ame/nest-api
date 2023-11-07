@@ -1,19 +1,27 @@
-import { INestApplication } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
 
-import { initApp } from './util'
+import { fixture as f } from './helper'
+import auth from './suites/auth'
+
+import { AppModule } from '@/app.module'
 
 describe('AppController (e2e)', () => {
-  let app: INestApplication
-
   beforeAll(async () => {
-    app = await initApp()
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile()
+
+    f.app = moduleFixture.createNestApplication()
+    await f.app.init()
   })
   afterAll(async () => {
-    await app.close()
+    await f.app.close()
   })
 
   it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200)
+    return request(f.app.getHttpServer()).get('/').expect(200)
   })
+
+  auth()
 })
