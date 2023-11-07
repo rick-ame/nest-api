@@ -1,6 +1,6 @@
-import { ValidationPipe } from '@nestjs/common'
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { NestFactory } from '@nestjs/core'
+import { NestFactory, Reflector } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 import { AppModule } from './app.module'
@@ -13,6 +13,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   )
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
   // use pre-defined variable in webpack this section could be dead code in build result,
   // would not affect product env even with wrong env config
