@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 env:
-  DATABASE_URL: mongodb://localhost
+  DATABASE_URL: mongodb://localhost:27017/test
 
 jobs:
   Test:
