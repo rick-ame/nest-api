@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
 
+import { AppModule } from '@/app.module'
+
 import { fixture as f } from './helper'
 import auth from './suites/auth'
-
-import { AppModule } from '@/app.module'
 
 describe('AppController (e2e)', () => {
   beforeAll(async () => {

@@ -3,9 +3,9 @@ import { ConfigService } from '@nestjs/config'
 import { AuthGuard, PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 
-import { UserEntity } from './auth.entity'
-
 import { PrismaService } from '@/prisma/prisma.service'
+
+import { UserEntity } from './auth.entity'
 
 export interface JwtPayload {
   sub: string

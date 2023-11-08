@@ -5,10 +5,10 @@ import { PrismaClient } from '@prisma/client'
 import * as argon from 'argon2'
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended'
 
+import { PrismaService } from '@/prisma/prisma.service'
+
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
-
-import { PrismaService } from '@/prisma/prisma.service'
 
 describe('AuthController', () => {
   let authController: AuthController

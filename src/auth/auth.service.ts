@@ -4,11 +4,11 @@ import { JwtService } from '@nestjs/jwt'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import * as argon from 'argon2'
 
+import { PrismaService } from '@/prisma/prisma.service'
+
 import { AuthDto } from './auth.dto'
 import { AuthEntity } from './auth.entity'
 import { type JwtPayload } from './auth.jwt'
-
-import { PrismaService } from '@/prisma/prisma.service'
 
 @Injectable()
 export class AuthService {
