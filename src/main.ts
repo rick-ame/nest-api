@@ -22,7 +22,9 @@ async function bootstrap() {
       app,
       new DocumentBuilder()
         .setTitle('Nest API')
+        .setDescription('NestJS Demo API')
         .setVersion(globalThis.VERSION)
+        .addBearerAuth()
         .build(),
     )
     SwaggerModule.setup('docs', app, document)

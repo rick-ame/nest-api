@@ -1,16 +1,24 @@
 import { ForbiddenException, Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { JwtService } from '@nestjs/jwt'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import * as argon from 'argon2'
 
 import { AuthDto } from './auth.dto'
+import { AuthEntity } from './auth.entity'
+import { type JwtPayload } from './auth.jwt'
 
 import { PrismaService } from '@/prisma/prisma.service'
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwt: JwtService,
+    private readonly config: ConfigService,
+  ) {}
 
-  async signup(dto: AuthDto) {
+  async signup(dto: AuthDto): Promise<AuthEntity> {
     const hash = await argon.hash(dto.password)
     try {
       const user = await this.prisma.user.create({
@@ -19,7 +27,10 @@ export class AuthService {
           hash,
         },
       })
-      return user
+      return {
+        ...user,
+        accessToken: await this.signToken(user.id, user.email),
+      }
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -30,7 +41,7 @@ export class AuthService {
     }
   }
 
-  async login(dto: AuthDto) {
+  async login(dto: AuthDto): Promise<AuthEntity> {
     const user = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
@@ -41,6 +52,20 @@ export class AuthService {
     const pwdMatch = await argon.verify(user.hash, dto.password)
     if (!pwdMatch) throw new ForbiddenException('Credentials incorrect')
 
-    return user
+    return {
+      ...user,
+      accessToken: await this.signToken(user.id, user.email),
+    }
+  }
+
+  private async signToken(userId: string, email: string) {
+    const payload: JwtPayload = {
+      sub: userId,
+      email,
+    }
+    return this.jwt.signAsync(payload, {
+      expiresIn: '30m',
+      secret: this.config.get('JWT_SECRET'),
+    })
   }
 }

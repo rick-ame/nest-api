@@ -1,3 +1,5 @@
+import { ConfigService } from '@nestjs/config'
+import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import { PrismaClient } from '@prisma/client'
 import * as argon from 'argon2'
@@ -15,7 +17,7 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const app = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService, PrismaService],
+      providers: [AuthService, PrismaService, JwtService, ConfigService],
     })
       .overrideProvider(PrismaService)
       .useValue(mockDeep<PrismaClient>())

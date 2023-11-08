@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 
 import { AuthDto } from './auth.dto'
@@ -17,6 +17,7 @@ export class AuthController {
   }
 
   @ApiCreatedResponse({ type: AuthEntity })
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() dto: AuthDto) {
     return new AuthEntity(await this.authService.login(dto))

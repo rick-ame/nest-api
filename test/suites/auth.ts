@@ -23,7 +23,7 @@ export default () =>
       return request(f.app.getHttpServer())
         .post('/login')
         .send(user)
-        .expect(201)
+        .expect(200)
         .expect(({ body }) => {
           expect(body.email).toBe(user.email)
         })
