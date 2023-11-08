@@ -2,7 +2,7 @@ import { ApiHideProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { User } from '@prisma/client'
 import { Exclude } from 'class-transformer'
 
-export class AuthEntity implements User {
+export class UserEntity implements User {
   id: string
   createdAt: Date
   updatedAt: Date
@@ -18,7 +18,15 @@ export class AuthEntity implements User {
   @Exclude()
   hash: string
 
-  constructor(partial: Partial<AuthEntity>) {
+  constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial)
+  }
+}
+
+export class AuthEntity extends UserEntity {
+  accessToken: string
+
+  constructor(partial: Partial<AuthEntity>) {
+    super(partial)
   }
 }
