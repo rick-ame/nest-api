@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
 
 import { AppModule } from '@/app.module'
+import { globalUse } from '@/hydrate'
 
 import { fixture as f } from './helper'
 import auth from './suites/auth'
@@ -13,6 +14,8 @@ describe('AppController (e2e)', () => {
     }).compile()
 
     f.app = moduleFixture.createNestApplication()
+    globalUse(f.app)
+
     await f.app.init()
   })
   afterAll(async () => {
