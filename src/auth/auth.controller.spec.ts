@@ -14,7 +14,7 @@ describe('AuthController', () => {
   let authController: AuthController
   let prismaMock: DeepMockProxy<PrismaClient>
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const app = await Test.createTestingModule({
       controllers: [AuthController],
       providers: [AuthService, PrismaService, JwtService, ConfigService],
@@ -27,47 +27,45 @@ describe('AuthController', () => {
     prismaMock = app.get(PrismaService)
   })
 
-  describe('auth', () => {
-    it('should user signup', () => {
-      const user = {
-        email: 'foo@bar.com',
-        password: 'foobar',
-      }
-      prismaMock.user.create.mockResolvedValue({
-        ...user,
-        id: 'id',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        hash: '',
-        firstName: null,
-        lastName: null,
-      })
-
-      expect(authController.signup(user)).resolves.toHaveProperty(
-        'email',
-        user.email,
-      )
+  it('should user signup', () => {
+    const user = {
+      email: 'foo@bar.com',
+      password: 'foobar',
+    }
+    prismaMock.user.create.mockResolvedValue({
+      ...user,
+      id: 'id',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      hash: '',
+      firstName: null,
+      lastName: null,
     })
 
-    it('should user login', async () => {
-      const user = {
-        email: 'foo@bar.com',
-        password: 'foobar',
-      }
-      prismaMock.user.findUnique.mockResolvedValue({
-        ...user,
-        id: 'id',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        hash: await argon.hash(user.password),
-        firstName: '',
-        lastName: '',
-      })
+    expect(authController.signup(user)).resolves.toHaveProperty(
+      'email',
+      user.email,
+    )
+  })
 
-      expect(authController.login(user)).resolves.toHaveProperty(
-        'email',
-        user.email,
-      )
+  it('should user login', async () => {
+    const user = {
+      email: 'foo@bar.com',
+      password: 'foobar',
+    }
+    prismaMock.user.findUnique.mockResolvedValue({
+      ...user,
+      id: 'id',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      hash: await argon.hash(user.password),
+      firstName: '',
+      lastName: '',
     })
+
+    expect(authController.login(user)).resolves.toHaveProperty(
+      'email',
+      user.email,
+    )
   })
 })
