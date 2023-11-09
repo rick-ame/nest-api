@@ -17,7 +17,7 @@ export class BookmarkService {
   }
 
   async getBookmarkById(userId: string, bookmarkId: string) {
-    const bookmark = this.prisma.bookmark.findUnique({
+    const bookmark = await this.prisma.bookmark.findUnique({
       where: {
         id: bookmarkId,
         userId,
