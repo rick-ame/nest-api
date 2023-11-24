@@ -21,6 +21,12 @@ describe('AuthController', () => {
     })
       .overrideProvider(PrismaService)
       .useValue(mockDeep<PrismaClient>())
+      .overrideProvider(ConfigService)
+      .useValue({
+        get: (key) => {
+          if (key === 'JWT_SECRET') return 'jwt_secret'
+        },
+      })
       .compile()
 
     authController = app.get(AuthController)
