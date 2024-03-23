@@ -29,33 +29,33 @@
 ## Installation
 
 ```bash
-$ npm install
+$ pnpm i
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run dev
+$ pnpm dev
 
 # watch mode
-$ npm run dev:watch
+$ pnpm dev:watch
 
 # production mode
-$ npm run start:prod
+$ pnpm start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ pnpm test
 
 # e2e tests
-$ npm run test:e2e
+$ pnpm test:e2e
 
 # test coverage
-$ npm run test:cov
+$ pnpm test:cov
 ```
 
 ## Support
