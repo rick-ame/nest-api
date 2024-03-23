@@ -23,13 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'npm'
-      - run: npm ci
+          node-version-file: ".nvmrc"
+      - run: npm i -g pnpm@8.15
+      - run: pnpm i
 
-      - run: npm run test:cov
+      - run: pnpm test:cov
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
@@ -37,7 +37,7 @@ jobs:
           mongodb-version: 6.0
           mongodb-replica-set: test-rs
 
-      - run: npm run test:e2e
+      - run: pnpm test:e2e
 
       # https://github.com/marketplace/actions/jest-coverage-comment
       - name: Jest Coverage Comment
