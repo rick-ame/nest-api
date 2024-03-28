@@ -6,6 +6,8 @@ import { globalUse } from '@/hydrate'
 
 import { fixture as f } from './helper'
 import auth from './suites/auth'
+import bookmark from './suites/bookmark'
+import user from './suites/user'
 
 describe('AppController (e2e)', () => {
   beforeAll(async () => {
@@ -27,4 +29,6 @@ describe('AppController (e2e)', () => {
   })
 
   auth()
+  user()
+  bookmark()
 })
