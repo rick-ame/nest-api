@@ -24,7 +24,7 @@
 
 ## Description
 
-This is a nest starter project. Uses [`Prisma`](https://www.prisma.io/) as DB ORM, implements unit and e2e testing.
+This is a [Nest](https://nestjs.com/) starter project. Uses [`Prisma`](https://www.prisma.io/) as DB ORM, implements unit and e2e testing.
 
 ## Installation
 
@@ -35,7 +35,7 @@ $ pnpm i
 **Note**:
 
 - After installation, you may need to run `pnpx prisma generate` manually. It's a known [issue](https://github.com/prisma/prisma/issues/6603) of Prisma.
-- Run `pnpx simple-git-hooks` to enable linting hooks.
+- Run `pnpx simple-git-hooks` to enable linting and testing hooks.
 
 ## Running the app
 
