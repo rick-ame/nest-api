@@ -5,10 +5,11 @@ import { fixture as f } from '../helper'
 export default () =>
   describe('BookmarkController (e2e)', () => {
     it('/bookmarks (POST)', () => {
-      request(f.app.getHttpServer())
+      return request(f.app.getHttpServer())
         .post('/bookmarks')
-        .expect(200)
+        .set(f.authHeader)
         .send(f.bookmark)
+        .expect(201)
         .expect(({ body }) => {
           expect(body.title).toBe(f.bookmark.title)
 
@@ -17,8 +18,9 @@ export default () =>
     })
 
     it('/bookmarks (GET)', () => {
-      request(f.app.getHttpServer())
+      return request(f.app.getHttpServer())
         .get('/bookmarks')
+        .set(f.authHeader)
         .expect(200)
         .expect(({ body }) => {
           expect(body).toHaveLength(1)
@@ -26,8 +28,9 @@ export default () =>
     })
 
     it('/bookmarks/:id (GET)', () => {
-      request(f.app.getHttpServer())
+      return request(f.app.getHttpServer())
         .get(`/bookmarks/${f.bookmark.id}`)
+        .set(f.authHeader)
         .expect(200)
         .expect(({ body }) => {
           expect(body.title).toBe(f.bookmark.title)
@@ -35,20 +38,22 @@ export default () =>
     })
 
     it('/bookmarks/:id (PATCH)', () => {
-      request(f.app.getHttpServer())
+      return request(f.app.getHttpServer())
         .patch(`/bookmarks/${f.bookmark.id}`)
-        .expect(200)
+        .set(f.authHeader)
         .send({
           title: 'Bookmark New Title',
         })
+        .expect(200)
         .expect(({ body }) => {
           expect(body.title).toBe('Bookmark New Title')
         })
     })
 
     it('/bookmarks/:id (DELETE)', () => {
-      request(f.app.getHttpServer())
+      return request(f.app.getHttpServer())
         .delete(`/bookmarks/${f.bookmark.id}`)
+        .set(f.authHeader)
         .expect(204)
     })
   })
