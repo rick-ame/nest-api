@@ -6,17 +6,19 @@ import { UserEntity } from '@/user/user.entity'
 interface Fixture {
   app: INestApplication
   user: Partial<UserEntity>
+  authHeader: { Authorization: string }
   bookmark: Partial<BookmarkEntity>
 }
 export const fixture = {
   app: undefined,
   user: {
-    email: 'foo@bar.com',
-    password: '123',
+    email: `Test-${Date.now()}@foobar.com`,
+    password: '123456',
   },
   bookmark: {
-    title: 'bookmark',
-    description: '',
-    link: '',
+    title: 'Bookmark',
+    description: 'bookmark',
+    link: 'https://bookmark.com',
   },
+  authHeader: {},
 } as unknown as Fixture
