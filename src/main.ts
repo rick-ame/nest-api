@@ -1,11 +1,13 @@
+import { INestApplication } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
+import { Application } from 'express'
 
 import { AppModule } from './app.module'
 import { document, globalUse } from './hydrate'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<INestApplication<Application>>(AppModule)
 
   globalUse(app)
 
@@ -15,7 +17,10 @@ async function bootstrap() {
     document(app)
   }
 
-  await app.listen(app.get(ConfigService).get('PORT') || 3000)
+  const PORT: string = app.get(ConfigService).get('PORT') || '3000'
+  await app.listen(PORT, async () => {
+    console.log(`Server running at port: ${PORT}`)
+  })
 }
 
 void bootstrap()
