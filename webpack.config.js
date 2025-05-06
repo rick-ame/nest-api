@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
 // @ts-check
 /** @typedef {import('webpack').Configuration} WebpackConfiguration */
 
@@ -8,6 +8,8 @@ const git = require('git-rev-sync')
 const { DefinePlugin } = require('webpack')
 const { merge } = require('webpack-merge')
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const { version } = require('./package.json')
 
 /**

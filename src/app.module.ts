@@ -6,6 +6,21 @@ import { BookmarkModule } from './bookmark/bookmark.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { UserModule } from './user/user.module'
 
+const config = () => {
+  if (!process.env.DATABASE_URI) {
+    throw new Error('env DATABASE_URI is required!')
+  }
+
+  const JWT_SECRET = process.env.JWT_SECRET
+  if (!JWT_SECRET) {
+    throw new Error('env JWT_SECRET is required!')
+  }
+
+  return {
+    JWT_SECRET,
+  }
+}
+
 @Controller()
 class AppController {
   @Get()
@@ -19,6 +34,7 @@ class AppController {
 @Module({
   imports: [
     ConfigModule.forRoot({
+      load: [config],
       isGlobal: true,
     }),
     PrismaModule,

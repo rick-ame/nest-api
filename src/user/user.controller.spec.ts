@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing'
-import { PrismaClient } from '@prisma/client'
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended'
 
+import { PrismaClient } from '@/generated/client'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { UserController } from './user.controller'
@@ -37,7 +37,7 @@ describe('UserController', () => {
     ).toHaveProperty('email', 'foo@bar.com')
   })
 
-  it('should edit user', () => {
+  it('should edit user', async () => {
     prismaMock.user.update.mockResolvedValue({
       id: 'id',
       createdAt: new Date(),
@@ -48,7 +48,7 @@ describe('UserController', () => {
       hash: '',
     })
 
-    expect(
+    await expect(
       userController.editUser('id', {
         email: 'foo@bar.com',
       }),
