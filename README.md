@@ -33,7 +33,7 @@ $ pnpm install
 
 **Note**:
 
-- After installation, you may need to run `pnpx prisma generate` manually. It's a known [issue](https://github.com/prisma/prisma/issues/6603) of Prisma.
+- After installation, you may need to run `pnpm prisma generate` manually. It's a known [issue](https://github.com/prisma/prisma/issues/6603) of Prisma.
 - Run `pnpm simple-git-hooks` to enable linting and testing git hooks.
 
 ## Compile and run the project

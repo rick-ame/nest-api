@@ -28,6 +28,7 @@ jobs:
           node-version-file: ".node-version"
       - run: npm i -g pnpm@10.10
       - run: pnpm i
+      - run: pnpm prisma generate
 
       - run: pnpm test:cov
 
