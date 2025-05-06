@@ -38,7 +38,7 @@ describe('UserController', () => {
   })
 
   it('should edit user', async () => {
-    prismaMock.user.update.mockResolvedValue({
+    const user = {
       id: 'id',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -46,7 +46,9 @@ describe('UserController', () => {
       firstName: null,
       lastName: null,
       hash: '',
-    })
+    }
+    prismaMock.user.findUnique.mockResolvedValue(user)
+    prismaMock.user.update.mockResolvedValue(user)
 
     await expect(
       userController.editUser('id', {

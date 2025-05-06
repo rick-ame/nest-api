@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common'
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
@@ -12,6 +12,8 @@ import { type JwtPayload } from './auth.jwt'
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name)
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
@@ -21,17 +23,30 @@ export class AuthService {
   async signup(dto: AuthDto): Promise<AuthEntity> {
     const hash = await argon.hash(dto.password)
     try {
+      const found = await this.prisma.user.findUnique({
+        where: {
+          email: dto.email,
+        },
+      })
+      if (found) {
+        throw new ForbiddenException('Credentials taken')
+      }
+
       const user = await this.prisma.user.create({
         data: {
           email: dto.email,
           hash,
         },
       })
+
+      this.logger.log(`User signup: ${user.id} - ${user.email}`)
+
       return {
         ...user,
         accessToken: await this.signToken(user.id, user.email),
       }
     } catch (error) {
+      // require db `unique` support
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
           throw new ForbiddenException('Credentials taken')
@@ -51,6 +66,8 @@ export class AuthService {
 
     const pwdMatch = await argon.verify(user.hash, dto.password)
     if (!pwdMatch) throw new ForbiddenException('Credentials incorrect')
+
+    this.logger.log(`User login: ${user.id} - ${user.email}`)
 
     return {
       ...user,
