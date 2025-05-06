@@ -1,10 +1,10 @@
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
-import { PrismaClient } from '@prisma/client'
 import * as argon from 'argon2'
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended'
 
+import { PrismaClient } from '@/generated/client'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { AuthController } from './auth.controller'
@@ -33,7 +33,7 @@ describe('AuthController', () => {
     prismaMock = app.get(PrismaService)
   })
 
-  it('should user signup', () => {
+  it('should user signup', async () => {
     const user = {
       email: 'foo@bar.com',
       password: 'foobar',
@@ -48,7 +48,7 @@ describe('AuthController', () => {
       lastName: null,
     })
 
-    expect(authController.signup(user)).resolves.toHaveProperty(
+    await expect(authController.signup(user)).resolves.toHaveProperty(
       'email',
       user.email,
     )
@@ -69,7 +69,7 @@ describe('AuthController', () => {
       lastName: '',
     })
 
-    expect(authController.login(user)).resolves.toHaveProperty(
+    await expect(authController.login(user)).resolves.toHaveProperty(
       'email',
       user.email,
     )

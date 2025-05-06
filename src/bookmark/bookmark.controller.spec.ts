@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing'
-import { PrismaClient } from '@prisma/client'
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended'
 
+import { PrismaClient } from '@/generated/client'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { BookmarkController } from './bookmark.controller'
@@ -23,7 +23,7 @@ describe('BookmarkController', () => {
     prismaMock = app.get(PrismaService)
   })
 
-  it('can get all bookmarks of user', () => {
+  it('can get all bookmarks of user', async () => {
     prismaMock.bookmark.findMany.mockResolvedValue([
       {
         id: 'id',
@@ -38,10 +38,12 @@ describe('BookmarkController', () => {
       },
     ])
 
-    expect(bookmarkController.getBookmarks('userId')).resolves.toHaveLength(1)
+    await expect(
+      bookmarkController.getBookmarks('userId'),
+    ).resolves.toHaveLength(1)
   })
 
-  it('can get bookmark by its id', () => {
+  it('can get bookmark by its id', async () => {
     prismaMock.bookmark.findUnique.mockResolvedValue({
       id: 'id',
       createdAt: new Date(),
@@ -52,12 +54,12 @@ describe('BookmarkController', () => {
       userId: 'userId',
     })
 
-    expect(
+    await expect(
       bookmarkController.getBookmarkById('userId', 'id'),
     ).resolves.toHaveProperty('title', 'Bookmark')
   })
 
-  it('can create bookmark', () => {
+  it('can create bookmark', async () => {
     const bookmark = {
       title: 'Bookmark',
       description: '',
@@ -71,12 +73,12 @@ describe('BookmarkController', () => {
       userId: 'userId',
     })
 
-    expect(
+    await expect(
       bookmarkController.createBookmark('userId', bookmark),
     ).resolves.toHaveProperty('title', bookmark.title)
   })
 
-  it('can edit bookmark by its id', () => {
+  it('can edit bookmark by its id', async () => {
     const bookmark = {
       title: 'Bookmark',
       description: '',
@@ -90,13 +92,13 @@ describe('BookmarkController', () => {
       userId: 'userId',
     })
 
-    expect(
+    await expect(
       bookmarkController.editBookmarkById('userId', 'id', bookmark),
     ).resolves.toHaveProperty('title', 'Bookmark')
   })
 
-  it('can delete bookmark by its id', () => {
-    expect(
+  it('can delete bookmark by its id', async () => {
+    await expect(
       bookmarkController.deleteBookmarkById('userId', 'id'),
     ).resolves.toBeUndefined()
   })

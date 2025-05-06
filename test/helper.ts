@@ -1,10 +1,11 @@
 import { INestApplication } from '@nestjs/common'
+import { App } from 'supertest/types'
 
 import { BookmarkEntity } from '@/bookmark/bookmark.entity'
 import { UserEntity } from '@/user/user.entity'
 
 interface Fixture {
-  app: INestApplication
+  app: INestApplication<App>
   user: Partial<UserEntity>
   authHeader: { Authorization: string }
   bookmark: Partial<BookmarkEntity>

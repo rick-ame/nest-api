@@ -21,7 +21,7 @@ export const document = (app: INestApplication) => {
     new DocumentBuilder()
       .setTitle('Nest API')
       .setDescription('NestJS Demo API')
-      .setVersion(globalThis.VERSION)
+      .setVersion(globalThis.VERSION as string)
       .addBearerAuth()
       .build(),
   )

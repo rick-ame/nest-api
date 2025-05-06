@@ -1,5 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger'
-import { Bookmark } from '@prisma/client'
+
+import { Bookmark } from '@/generated/client'
 
 export class BookmarkEntity implements Bookmark {
   id: string
