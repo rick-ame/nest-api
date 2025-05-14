@@ -25,20 +25,33 @@
 
 This is a [Nest](https://nestjs.com/) starter project. Uses [`Prisma`](https://www.prisma.io/) as DB ORM, implements unit and e2e testing.
 
-## Project setup
+## 🧪 .env Setup
 
-```bash
+Database [MongoDB Atlas](https://www.mongodb.com/) is recommended.
+
+```
+DATABASE_URL=your_mongodb_url
+JWT_SECRET=your_jwt_secret
+PORT=3000 # optional
+ENABLE_SWAGGER=1 # optional, or 0 to disable
+```
+
+## 🎯 Develop and Run the Project
+
+### Installation
+
+```sh
 $ pnpm install
 ```
 
 **Note**:
 
 - After installation, you may need to run `pnpm prisma generate` manually. It's a known [issue](https://github.com/prisma/prisma/issues/6603) of Prisma.
-- Run `pnpm simple-git-hooks` to enable linting and testing git hooks.
+- Run `pnpm simple-git-hooks` to enable git hooks for linting and testing.
 
-## Compile and run the project
+### Compile and Run the project
 
-```bash
+```sh
 # development
 $ pnpm run start
 
@@ -46,10 +59,11 @@ $ pnpm run start
 $ pnpm run start:dev
 
 # production mode
+$ pnpm run build
 $ pnpm run start:prod
 ```
 
-## Run tests
+### Run tests
 
 ```bash
 # unit tests
@@ -62,18 +76,11 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
-## Deployment
+## 🐳 Containerizing
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+```sh
+$ docker-compose up
 ```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
 ## Resources
 
