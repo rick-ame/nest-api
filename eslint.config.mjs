@@ -24,7 +24,9 @@ const config = tseslint.config(
         ...globals.jest,
       },
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ['*.{mjs,js}'],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },

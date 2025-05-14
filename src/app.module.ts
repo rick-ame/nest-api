@@ -7,8 +7,8 @@ import { PrismaModule } from './prisma/prisma.module'
 import { UserModule } from './user/user.module'
 
 const config = () => {
-  if (!process.env.DATABASE_URI) {
-    throw new Error('env DATABASE_URI is required!')
+  if (!process.env.DATABASE_URL) {
+    throw new Error('env DATABASE_URL is required!')
   }
 
   const JWT_SECRET = process.env.JWT_SECRET

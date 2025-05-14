@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 env:
-  DATABASE_URI: mongodb://localhost:27017/test
+  DATABASE_URL: mongodb://localhost:27017/test
   JWT_SECRET: jwt_secret
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
-      - run: npm i -g pnpm@10.10
+      - run: npm i -g pnpm@10.11
       - run: pnpm i
       - run: pnpm prisma generate
 
