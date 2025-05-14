@@ -1,6 +1,6 @@
 # Step: build
 FROM node:22-alpine AS builder
-RUN npm i -g pnpm@10.11
+RUN corepack enable
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ RUN pnpm prisma generate && \
 
 # Step: prod
 FROM node:22-alpine
-RUN npm i -g pnpm@10.11
+RUN corepack enable
 
 WORKDIR /app
 
