@@ -3,16 +3,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        ENABLE_SWAGGER: "${ENABLE_SWAGGER:-0}"
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:${PORT:-3000}"
     environment:
-      NODE_ENV: production
-      DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET: ${JWT_SECRET}
+      PORT: "${PORT:-3000}"
+      DATABASE_URL: ${DATABASE_URL?err}
+      JWT_SECRET: ${JWT_SECRET?err}
     env_file:
       - .env
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3

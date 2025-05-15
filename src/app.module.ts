@@ -16,8 +16,11 @@ const config = () => {
     throw new Error('env JWT_SECRET is required!')
   }
 
+  const PORT = process.env.PORT || '3000'
+
   return {
     JWT_SECRET,
+    PORT,
   }
 }
 
@@ -28,6 +31,11 @@ class AppController {
     return {
       version: globalThis.VERSION,
     }
+  }
+
+  @Get('healthcheck')
+  healthCheck() {
+    return 'Version: ' + globalThis.VERSION
   }
 }
 

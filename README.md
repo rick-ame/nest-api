@@ -63,6 +63,8 @@ $ pnpm run build
 $ pnpm run start:prod
 ```
 
+_If swagger is enabled, you can visit `/docs` path._
+
 ### Run tests
 
 ```bash
