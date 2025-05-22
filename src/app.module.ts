@@ -33,7 +33,7 @@ class AppController {
     }
   }
 
-  @Get('healthcheck')
+  @Get('health')
   healthCheck() {
     return 'Version: ' + globalThis.VERSION
   }
