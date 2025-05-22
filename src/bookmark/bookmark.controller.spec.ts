@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing'
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended'
 
-import { PrismaClient } from '@/generated/client'
+import { PrismaClient } from '@/generated/prisma'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { BookmarkController } from './bookmark.controller'

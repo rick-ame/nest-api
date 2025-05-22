@@ -1,7 +1,7 @@
 import { ApiHideProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Exclude } from 'class-transformer'
 
-import { User } from '@/generated/client'
+import { User } from '@/generated/prisma'
 
 export class UserEntity implements User {
   id: string

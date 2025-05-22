@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing'
 import * as argon from 'argon2'
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended'
 
-import { PrismaClient } from '@/generated/client'
+import { PrismaClient } from '@/generated/prisma'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { AuthController } from './auth.controller'
